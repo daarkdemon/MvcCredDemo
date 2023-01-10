@@ -1,0 +1,51 @@
+﻿@model IEnumerable<MvcTestApp.Models.CategoryModel>
+
+@{
+    //ViewBag.Title = "ViewCategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ViewCategory</h2>
+<style>
+    table, th, td {
+        border: 1px solid black;
+    }
+</style>
+<p>
+
+    @using (Html.BeginForm("ExportCsv", "Category"))
+    {
+        <input type="button" class="btn btn-default" style="margin:5px" value="Add Category" onclick="location.href='@Url.Action("AddCategory", "Category")'" />
+        <button type="submit" id="submitButton" class="btn btn-default" style="margin:5px">Export CSV</button>
+    }
+</p>
+<h4>Category List</h4>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditCategory", new { id = item.CategoryId }) |
+            @Html.ActionLink("Details", "ViewCategory", "Category", new { id = item.CategoryId }) |
+            @Html.ActionLink("Delete", "Delete", "Category", new { id = item.CategoryId }, new { onclick = "return confirm('Are sure wants to delete?');" })
+        </td>
+        
+    </tr>
+}
+
+</table>
